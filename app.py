@@ -1,10 +1,10 @@
 from flask import Flask
-
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-from routes.routes import main_routes
 
+# Correct the Blueprint import based on your file and folder structure
+from routes.routes import main_routes  # If main_routes is defined in routes/routes.py
 
 def create_app():
     app = Flask(__name__)
@@ -21,8 +21,7 @@ def create_app():
     bcrypt = Bcrypt(app)
     jwt = JWTManager(app)
 
-    # Import and register the Blueprints
-    from routes import main_routes
+    # Register the Blueprint
     app.register_blueprint(main_routes)
 
     return app
