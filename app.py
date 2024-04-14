@@ -3,6 +3,8 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from routes.routes import main_routes
+
 
 def create_app():
     app = Flask(__name__)
