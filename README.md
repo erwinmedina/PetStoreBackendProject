@@ -9,7 +9,7 @@
 | ---- | ----- | ------------ |
 | Erwin Medina | erwinmedina@csu.fullerton.edu | Slacked
 | Abel Mendoza | <email> | Great person with great github
-| Akshat Javiya | <email> | Great person with a lot of contributions
+| Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Great person with a lot of contributions
 
 # Objective
 This project is focused on the backend aspect of a Pet Store application. It builds off of the previous assignment, enhancing it by integrating secure authentication, encrypted password storage, and the implementation of advanced scalable strategies to ensure the application can efficiently handle increased loads and maintain high performance.
