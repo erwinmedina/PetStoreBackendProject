@@ -8,7 +8,7 @@
 | Name | Email | Contribution |
 | ---- | ----- | ------------ |
 | Erwin Medina | erwinmedina@csu.fullerton.edu | Slacked
-| Abel Mendoza | <email> | Great person with great github
+| Abel Mendoza | abel_mendoza10@csu.fullerton.edu | Great person with great github
 | Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Great person with a lot of contributions
 
 # Objective
