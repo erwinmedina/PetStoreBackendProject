@@ -1,2 +1,5 @@
-# ignore the .env file for security reasons
-.envvenv/
+# Ignore the .env file for security reasons
+.env
+
+# Ignore the virtual environment directory
+venv/
