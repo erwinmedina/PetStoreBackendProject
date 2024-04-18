@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from pymongo import MongoClient
 from bson import ObjectId
 
+
 # Correct the Blueprint import based on your file and folder structure
 from routes.routes import main_routes  # If main_routes is defined in routes/routes.py
 
