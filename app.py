@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from pymongo import MongoClient
 from bson import ObjectId
+from users import userapp
 
 
 # Correct the Blueprint import based on your file and folder structure
@@ -17,7 +18,9 @@ mongo_uri = os.environ.get('MONGODB_URI')
 mongo_client = MongoClient(mongo_uri)
 db = mongo_client["PetStoreProject"]
 collection = db["PetStore"]
+users_collection = db["users"]
 app = Flask(__name__)
+app.register_blueprint(userapp, url_prefix='/')
 
 # ***************************************** #
 # Gets all items in the petstore collection #
