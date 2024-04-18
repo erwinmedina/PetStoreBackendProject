@@ -7,11 +7,13 @@ from flask_jwt_extended import JWTManager
 from pymongo import MongoClient
 from bson import ObjectId
 
+
 userapp = Blueprint('userapp', __name__)
 mongo_uri = os.environ.get('MONGODB_URI')
 mongo_client = MongoClient(mongo_uri)
 db = mongo_client["PetStoreProject"]
 users_collection = db["users"]
+
 
 
 # ***************************************** #
