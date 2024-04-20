@@ -8,7 +8,7 @@ from flask_jwt_extended import JWTManager
 
 # Import your Blueprints
 from routes.routes import main_routes
-from users import userapp
+from routes.user_routes import userapp
 
 def create_app():
     # Load environment variables
