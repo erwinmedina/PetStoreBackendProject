@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 
+
 # Creating a Blueprint called 'main_routes'
 main_routes = Blueprint('main_routes', __name__)
 

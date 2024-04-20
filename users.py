@@ -14,6 +14,7 @@ db = mongo_client["PetStoreProject"]
 users_collection = db["users"]
 
 
+
 # ***************************************** #
 # Gets all items in the users collection #
 # ***************************************** #
