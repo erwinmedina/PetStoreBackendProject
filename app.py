@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_caching import Cache
 
 # Import your Blueprints
 from routes.routes import main_routes
@@ -22,6 +23,13 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your_secret_key_here')
     app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'super-secret')  # Adjust this for production
 
+    # Configure Redis for caching
+    app.config['CACHE_TYPE'] = 'redis'
+    app.config['CACHE_REDIS_URL'] = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')  # Defaulting to local Redis
+
+    # Initialize Cache
+    cache = Cache(app)
+
     # Initialize MongoDB
     mongo_client = MongoClient(app.config['MONGO_URI'])
     db = mongo_client["PetStoreProject"]
@@ -38,11 +46,13 @@ def create_app():
 
     # Define routes directly in the app for demonstration
     @app.route("/api/petstore", methods=["GET"])
+    @cache.cached(timeout=60)  # Caching this route for 60 seconds
     def get_AllPetStore():
         data = list(collection.find({}))
         return jsonify([{'_id': str(item['_id']), **item} for item in data])
 
     @app.route("/api/petstore/<string:_id>", methods=["GET"])
+    @cache.cached(timeout=60)  # Caching this route for 60 seconds
     def get_PetStoreById(_id):
         data = collection.find_one({'_id': ObjectId(_id)})
         if data:
@@ -58,12 +68,14 @@ def create_app():
             return jsonify({"Error": "Missing name field"}), 400
         collection.insert_one(data)
         data['_id'] = str(data['_id'])
+        cache.clear()  # Clear cache after adding a new item
         return jsonify(data), 201
 
     @app.route("/api/petstore/<string:_id>", methods=["DELETE"])
     def delete_PetStoreById(_id):
         result = collection.delete_one({'_id': ObjectId(_id)})
         if result.deleted_count:
+            cache.clear()  # Clear cache after deleting an item
             return jsonify({"Message": "Item deleted successfully"}), 200
         else:
             return jsonify({"Error": "Item not found"}), 404
@@ -73,6 +85,7 @@ def create_app():
         data = request.json
         result = collection.update_one({'_id': ObjectId(_id)}, {"$set": data})
         if result.modified_count:
+            cache.clear()  # Clear cache after updating an item
             return jsonify({"Message": "Item updated successfully"}), 200
         else:
             return jsonify({"Error": "Item not found"}), 404
