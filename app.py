@@ -7,7 +7,6 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_caching import Cache
 
-
 # Import Blueprints
 from routes.routes import main_routes
 from routes.user_routes import userapp
@@ -65,10 +64,12 @@ def create_app():
     @app.route("/api/petstore", methods=["POST"])
     def add_PetStore():
         data = request.json
+        print("Received data:", data)  # Debug print
         if "name" not in data:
             return jsonify({"Error": "Missing name field"}), 400
         collection.insert_one(data)
         data['_id'] = str(data['_id'])
+        print("Item added:", data)  # Debug print
         cache.clear()  # Clear the cache when a new item is added
         return jsonify(data), 201
 
