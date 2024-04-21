@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from pymongo import MongoClient
 from bson import ObjectId
 
+
 userapp = Blueprint('userapp', __name__)
 load_dotenv()
 mongo_uri = os.environ.get('MONGODB_URI')
