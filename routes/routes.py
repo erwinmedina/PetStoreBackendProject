@@ -1,19 +1,9 @@
 
 from flask import Blueprint, jsonify, request
 from auth import create_user, authenticate_user
-from dotenv import load_dotenv
-from pymongo import MongoClient
-import os
 
 # Create a Blueprint for main routes
 main_routes = Blueprint('main_routes', __name__)
-userapp = Blueprint('userapp', __name__)
-load_dotenv()
-mongo_uri = os.environ.get('MONGODB_URI')
-mongo_client = MongoClient(mongo_uri)
-db = mongo_client["PetStoreProject"]
-users_collection = db["users"]
-
 
 @main_routes.route('/')
 def home():

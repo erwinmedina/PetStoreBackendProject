@@ -5,13 +5,14 @@ import os
 class User:
     def __init__(self, username, password, db):
         self.username = username
-        self.password = self.hash_password(password)  # Hash password upon initialization
+        self.password = password  # Hash password upon initialization
         self.db = db
         self.collection = self.db.users  # Assumes there is a 'users' collection in the MongoDB database
 
-    def hash_password(self, password):
-        """Hash a password for storing."""
-        return generate_password_hash(password)
+    # I think this double hashes the password, creating discrepancy when authenticating user
+    # def hash_password(self, password):
+    #     """Hash a password for storing."""
+    #     return generate_password_hash(password)
 
     def verify_password(self, password):
         """Check hashed password. Return True if matches, False otherwise."""

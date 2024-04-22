@@ -14,9 +14,8 @@ redis_client = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('R
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
-userapp = Blueprint('userapp', __name__)
-
 # Handles loading the database
+userapp = Blueprint('userapp', __name__)
 load_dotenv()
 mongo_uri = os.environ.get('MONGO_URI')
 mongo_client = MongoClient(mongo_uri)
@@ -30,7 +29,6 @@ def initialize_auth(app):
 def create_user(username, password):
     # Hash password and create a new user in the database
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-
     if User.find_by_username(username, db) is not None:
         return False, "User already exists"  # User already exists
     user = User(username=username, password=hashed_password, db=db)
@@ -48,7 +46,8 @@ def authenticate_user(username, password):
     if bcrypt.check_password_hash(user.password, password):
         # Create a new token with the user id inside
         access_token = create_access_token(identity=username, expires_delta=timedelta(days=7))
+        print(access_token)
         # Cache the JWT token in Redis
         redis_client.setex(f"user_token:{username}", timedelta(days=7), access_token)
-        return True, "Authentication successful", access_token
-    return False, "Invalid credentials", None
+        return True, access_token
+    return False, None
