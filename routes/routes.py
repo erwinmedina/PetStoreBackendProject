@@ -13,8 +13,19 @@ def home():
 def register():
     if request.method == 'POST':
         username = request.json.get('username')
+        firstname = request.json.get('firstname')
+        lastname = request.json.get('lastname')
+        email = request.json.get('email')
         password = request.json.get('password')
-        if create_user(username, password):
+
+        address = request.json.get('address', {})
+        streetname = address.get('streetname')
+        suiteapt = address.get('suite&apt')
+        city = address.get('city')
+        state = address.get('state')
+        zipcode = address.get('zipcode')
+
+        if create_user(username, password, firstname, lastname, email, streetname, suiteapt, city, state, zipcode):
             return jsonify({'message': 'Registration successful'}), 201
         else:
             return jsonify({'message': 'Registration failed'}), 400

@@ -3,10 +3,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 class User:
-    def __init__(self, username, password, db):
+    def __init__(self, username, password, db, email="", firstname="", lastname="", streetname="", suiteapt="", city="", state="", zipcode=""):
         self.username = username
         self.password = password  # Hash password upon initialization
         self.db = db
+        self.email = email
+        self.firstname = firstname
+        self.lastname = lastname
+        self.address = {
+            'streetname': streetname,
+            'suite&apt': suiteapt,
+            'city': city,
+            'state': state,
+            'zipcode': zipcode
+        }
         self.collection = self.db.users  # Assumes there is a 'users' collection in the MongoDB database
 
     # I think this double hashes the password, creating discrepancy when authenticating user
@@ -22,7 +32,11 @@ class User:
         """Save the user in the database."""
         user_data = {
             "username": self.username,
-            "password": self.password  # Store the hashed password
+            "password": self.password,  # Store the hashed password
+            "firstname": self.firstname,
+            "lastname": self.lastname,
+            "email": self.email,
+            "address": self.address
         }
         if self.collection.find_one({"username": self.username}):
             raise Exception("User already exists")
