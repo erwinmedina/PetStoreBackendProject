@@ -25,7 +25,7 @@ def create_app():
     
     # Configure Redis for caching
     app.config['CACHE_TYPE'] = 'redis'
-    app.config['CACHE_REDIS_URL'] = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+    app.config['CACHE_REDIS_URL'] = os.environ.get('REDIS_URL')
 
     # Initialize Redis Cache
     cache = Cache(app)
@@ -42,55 +42,7 @@ def create_app():
 
     # Register Blueprints for different parts of the application
     app.register_blueprint(main_routes)
-    app.register_blueprint(userapp, url_prefix='/users')
-
-    # Define API routes with caching and database operations
-    @app.route("/api/petstore", methods=["GET"])
-    @cache.cached(timeout=60)  # Cache this endpoint for 60 seconds
-    def get_AllPetStore():
-        data = list(collection.find({}))
-        return jsonify([{'_id': str(item['_id']), **item} for item in data])
-
-    @app.route("/api/petstore/<string:_id>", methods=["GET"])
-    @cache.cached(timeout=60)
-    def get_PetStoreById(_id):
-        data = collection.find_one({'_id': ObjectId(_id)})
-        if data:
-            data['_id'] = str(data['_id'])
-            return jsonify(data)
-        else:
-            return jsonify({"Error": "Item not found"}), 404
-
-    @app.route("/api/petstore", methods=["POST"])
-    def add_PetStore():
-        data = request.json
-        print("Received data:", data)  # Debug print
-        if "name" not in data:
-            return jsonify({"Error": "Missing name field"}), 400
-        collection.insert_one(data)
-        data['_id'] = str(data['_id'])
-        print("Item added:", data)  # Debug print
-        cache.clear()  # Clear the cache when a new item is added
-        return jsonify(data), 201
-
-    @app.route("/api/petstore/<string:_id>", methods=["DELETE"])
-    def delete_PetStoreById(_id):
-        result = collection.delete_one({'_id': ObjectId(_id)})
-        if result.deleted_count:
-            cache.clear()  # Clear the cache when an item is deleted
-            return jsonify({"Message": "Item deleted successfully"}), 200
-        else:
-            return jsonify({"Error": "Item not found"}), 404
-
-    @app.route("/api/petstore/<string:_id>", methods=["PUT"])
-    def update_PetStoreById(_id):
-        data = request.json
-        result = collection.update_one({'_id': ObjectId(_id)}, {"$set": data})
-        if result.modified_count:
-            cache.clear()  # Clear the cache when an item is updated
-            return jsonify({"Message": "Item updated successfully"}), 200
-        else:
-            return jsonify({"Error": "Item not found"}), 404
+    app.register_blueprint(userapp, cache=cache)
 
     return app
 

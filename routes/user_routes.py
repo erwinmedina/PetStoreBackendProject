@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request, Blueprint
+from flask import Flask, jsonify, request, Blueprint, current_app
 from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
@@ -10,10 +10,10 @@ from bson import ObjectId
 
 userapp = Blueprint('userapp', __name__)
 load_dotenv()
-mongo_uri = os.environ.get('MONGODB_URI')
-mongo_client = MongoClient(mongo_uri)
+mongo_client = MongoClient(os.environ.get("MONGODB_URI"))
 db = mongo_client["PetStoreProject"]
 users_collection = db["users"]
+
 
 # ***************************************** #
 # Gets all items in the users collection    #
@@ -21,12 +21,24 @@ users_collection = db["users"]
 @userapp.route("/api/petstore/users", methods=["GET"])
 @jwt_required()
 def get_AllUsers():
-    try:
-        data = list(users_collection.find({}))
-        return jsonify([{'_id': str(item['_id']), **item} for item in data])
-    except Exception as e:
-        print(e)
-        return jsonify({"Error": "Error occurred while retrieving data from database"}), 500
+    cache_dict = current_app.extensions["cache"]
+    cache = list(cache_dict.values())[0]
+    cached_data = cache.get("all_users_data")
+
+    if cached_data:
+        return jsonify(cached_data)
+    else:
+        try:
+            data = list(users_collection.find({}))
+            for item in data:
+                item['_id'] = str(item['_id'])
+            cache.set("all_users_data", data, timeout=60)
+            return jsonify(data)
+        
+        except Exception as e:
+            print(e)
+            return jsonify({"Error": "Error occurred while retrieving data from database"}), 500
+        
 
 # ********************************************** #
 # Get a specific user from the collection        #
@@ -53,11 +65,14 @@ def add_User():
         data = request.json
         if not all(key in data for key in ['FirstName', 'LastName', 'Email', 'Password']):
             return jsonify({"Error": "Missing required fields"}), 400
+        
         if users_collection.find_one({"Email": data['Email']}):
             return jsonify({"Error": "User already exists"}), 409
         data['Password'] = Bcrypt().generate_password_hash(data['Password']).decode('utf-8')
         users_collection.insert_one(data)
+        
         return jsonify({"Message": "User added successfully", "_id": str(data['_id'])}), 201
+    
     except Exception as e:
         print(e)
         return jsonify({"Error": "Error occurred while inserting"}), 500

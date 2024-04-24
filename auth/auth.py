@@ -9,14 +9,15 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 
 # Setup Redis connection
-redis_client = redis.StrictRedis(host=os.getenv('REDIS_HOST'), port=os.getenv('REDIS_PORT'), password=os.getenv('REDIS_PASSWORD'), decode_responses=True)
+load_dotenv()
+redis_url = os.environ.get("REDIS_URL")
+redis_client = redis.StrictRedis.from_url(os.environ.get("REDIS_URL"), decode_responses=True)
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
 # Handles loading the database
 userapp = Blueprint('userapp', __name__)
-load_dotenv()
 mongo_uri = os.environ.get('MONGO_URI')
 mongo_client = MongoClient(mongo_uri)
 db = mongo_client["PetStoreProject"]
