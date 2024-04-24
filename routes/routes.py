@@ -12,6 +12,40 @@ def home():
 @main_routes.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
+        data = request.json
+        if "username" not in data:
+            return jsonify({'message': 'Username is missing'}), 400
+        
+        if "password" not in data:
+            return jsonify({'message': 'Password is missing'}), 400
+        
+        if "firstname" not in data:
+            return jsonify({'message': 'Firstname is missing'}), 400
+        
+        if "lastname" not in data:
+            return jsonify({'message': 'Lastname is missing'}), 400
+        
+        if "email" not in data:
+            return jsonify({'message': 'Email is missing'}), 400
+        
+        if "address" not in data:
+            return jsonify({'message': 'Address is missing'}), 400
+        
+        if "streetname" not in data['address']:
+            return jsonify({'message': 'Streetname is missing'}), 400
+        
+        if "city" not in data['address']:
+            return jsonify({'message': 'City is missing'}), 400
+        
+        if "state" not in data['address']:
+            return jsonify({'message': 'State is missing'}), 400
+        
+        if "zipcode" not in data['address']:
+            return jsonify({'message': 'Zipcode is missing'}), 400
+        
+        if "suite&apt" not in data['address']:
+            return jsonify({'message': 'Suite&apt is missing'}), 400
+        
         username = request.json.get('username')
         firstname = request.json.get('firstname')
         lastname = request.json.get('lastname')
@@ -35,6 +69,9 @@ def register():
 @main_routes.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
+        data = request.json
+        if not all(k in data for k in ("username","password")):
+            return jsonify({'message': "missing credentials"}), 400
         username = request.json.get('username')
         password = request.json.get('password')
         authenticated, token = authenticate_user(username, password)
