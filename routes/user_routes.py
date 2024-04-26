@@ -100,10 +100,46 @@ def delete_UserById(_id):
 @jwt_required()
 def delete_UserByEmail(email):
     try :
-        result = users_collection.delete_one({"Email": email})
-        if result.deleted_count:
+        result = users_collection.find_one_and_delete({"Email": email})
+        if result is not None:
             return jsonify({"Message": "User deleted successfully"}), 200
         else:
             return jsonify({"Error": "User not found"}), 404
     except Exception as e:
         return jsonify({"Error": "Error occurred while deleting"}), 500
+
+
+# *********************************************** #
+# Updat User's address from the users collection  #
+# *********************************************** #
+@userapp.route("/api/petstore/users/address", methods=["PUT"])
+@jwt_required()
+def update_UserAddress():
+    try:
+        data = request.json
+        if not all(key in data for key in ["username", "address"]):
+            return jsonify({"Error": "Missing required fields"}), 400
+        if not all(
+            key in data["address"]
+            for key in ["streetname", "suite&apt", "city", "state", "zipcode"]
+        ):
+            return jsonify({"Error": "Missing required fields"}), 400
+        answer = users_collection.find_one_and_update(
+            {"username": data["username"]},
+            {
+                "$set": {
+                    "streetname": data["streetname"],
+                    "suite&apt": data["suite&apt"],
+                    "city": data["city"],
+                    "state": data["state"],
+                    "zipcode": data["zipcode"],
+                }
+            },
+        )
+        if answer is None:
+            return jsonify({"Error": "User not found"}), 404
+        else:
+            return jsonify({"Message": "User address updated successfully"}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"Error": "Error occurred while updating"}), 500

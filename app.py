@@ -10,6 +10,7 @@ from flask_caching import Cache
 # Import Blueprints
 from routes.routes import main_routes
 from routes.user_routes import userapp
+from routes.pet_inventory_routes import petapp
 
 def create_app():
     # Load environment variables
@@ -43,6 +44,7 @@ def create_app():
     # Register Blueprints for different parts of the application
     app.register_blueprint(main_routes)
     app.register_blueprint(userapp, cache=cache)
+    app.register_blueprint(petapp, cache=cache)
 
     return app
 
