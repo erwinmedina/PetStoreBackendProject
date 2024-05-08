@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app  
 from auth import create_user, authenticate_user
 
 # Create a Blueprint for main routes
@@ -7,6 +7,7 @@ main_routes = Blueprint('main_routes', __name__)
 
 @main_routes.route('/')
 def home():
+    current_app.logger.debug(f"Server host: {request.host}")
     return "Welcome to the Pet Store Backend Project!"
 
 @main_routes.route('/register', methods=['POST', 'GET'])
