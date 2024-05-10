@@ -1,8 +1,3 @@
-from pymongo import MongoClient
-from werkzeug.security import generate_password_hash, check_password_hash
-import os
-
-
 class Pet:
     def __init__(self, petname, pettype, petweight, petgender, petcolor, petage, db):
         self.petname = petname

@@ -19,11 +19,6 @@ class User:
         }
         self.collection = self.db.users  # Assumes there is a 'users' collection in the MongoDB database
 
-    # I think this double hashes the password, creating discrepancy when authenticating user
-    # def hash_password(self, password):
-    #     """Hash a password for storing."""
-    #     return generate_password_hash(password)
-
     def verify_password(self, password):
         """Check hashed password. Return True if matches, False otherwise."""
         return check_password_hash(self.password, password)

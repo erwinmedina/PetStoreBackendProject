@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request, Blueprint, current_app
-from flask_pymongo import PyMongo
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from pymongo import MongoClient
