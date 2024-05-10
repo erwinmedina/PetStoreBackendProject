@@ -7,7 +7,8 @@ main_routes = Blueprint('main_routes', __name__)
 
 @main_routes.route('/')
 def home():
-    current_app.logger.debug(f"Server host: {request.host}")
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    current_app.logger.debug(f"Server host: {client_ip, request.headers}")
     return "Welcome to the Pet Store Backend Project!"
 
 @main_routes.route('/register', methods=['POST', 'GET'])
