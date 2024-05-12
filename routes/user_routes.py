@@ -109,9 +109,9 @@ def delete_UserByEmail(email):
         return jsonify({"Error": "Error occurred while deleting"}), 500
 
 
-# *********************************************** #
-# Updat User's address from the users collection  #
-# *********************************************** #
+# ************************************************ #
+# Update User's address from the users collection  #
+# ************************************************ #
 @userapp.route("/api/petstore/users/address", methods=["PUT"])
 @jwt_required()
 def update_UserAddress():

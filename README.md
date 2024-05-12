@@ -8,9 +8,9 @@
 
 | Name          | Email                            | Contribution                             |
 | ------------- | -------------------------------- | ---------------------------------------- |
-| Erwin Medina  | erwinmedina@csu.fullerton.edu    | Slacked                                  |
-| Abel Mendoza  | abel_mendoza10@csu.fullerton.edu | Great person with great github           |
-| Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Great person with a lot of contributions |
+| Erwin Medina  | erwinmedina@csu.fullerton.edu    | Caching, DB, Presentation, Main CRUD     |
+| Abel Mendoza  | abel_mendoza10@csu.fullerton.edu | ReadMe <unsure>                          |
+| Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Load Balancer, Presentation, Main CRUD   |
 
 <img src="image/README/1715234666089.png" width="350" height="350" alt="Shrunk Image">
 
@@ -23,6 +23,7 @@ The goal of this project is to develop a scalable and secure backend for a Pet S
 - **User Authentication**: Securely manage user sessions and data access using Flask-JWT-Extended.
 - **Password Encryption**: Utilize Flask-Bcrypt for hashing and verifying passwords to ensure data security.
 - **Data Caching**: Implement Redis caching to reduce database load and improve response times for frequently accessed data.
+- **Load Balancing**: Utilized Nginx to distribute HTTP requests as a load balancer, improving response times.
 - **Error Handling**: Advanced error handling mechanisms for debugging and smoother user experience.
 - **API Development**: RESTful API endpoints for managing pet store inventory and user interactions.
 
@@ -32,6 +33,7 @@ The goal of this project is to develop a scalable and secure backend for a Pet S
 - **Flask**: Web framework for building the API.
 - **MongoDB**: NoSQL database for storing user and product data.
 - **Redis**: In-memory data structure store used as a cache and session store.
+- **Nginx**: Utilized to handle incoming HTTP requests, and distribute them to appropriate servers, serving as a load balancer.
 
 This project is focused on the backend aspect of a Pet Store application. It builds off of the previous assignment, enhancing it by integrating secure authentication, encrypted password storage, and the implementation of advanced scalable strategies to ensure the application can efficiently handle increased loads and maintain high performance.
 
