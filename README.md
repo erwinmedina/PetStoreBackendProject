@@ -115,11 +115,11 @@ Here's an example `curl` request to add a new pet to the store:
 ```
 curl -X POST http://localhost:5000/api/petstore \
     -H "Content-Type: application/json" \
-    -d '{"name": "Dog Toy", "description": "A durable rubber toy", "price": 9.99}'
+    -d '{"petname": "Wishbone", "pettype": "dog", "petweight": "20", "petgender": "Male", "petcolor": "White and Brown", "petage": 5}'
 
 ```
 
-This will add a new product to the Pet Store and should return the newly created product's details.
+This will add a new pet to the Pet Store and should return the newly created product's details.
 
 ## Acknowledgements
 
