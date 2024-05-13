@@ -119,6 +119,18 @@ curl -X POST http://localhost:5000/api/petstore \
 
 ```
 
+## Images
+| Request | Output |
+| ------- | ------ |
+| Register (POST) | ![Register](https://i.imgur.com/wSN0rhO.png)
+| Log In (POST) | ![Login](https://i.imgur.com/GXtcjed.png)
+| All Users (GET) | ![All Users](https://i.imgur.com/jmfX2iv.png)
+| All Pets (GET) | ![All Pets](https://i.imgur.com/Syf2DdU.png)
+| All Pets with No Authorization (GET) | ![All Pets with No Authorization](https://i.imgur.com/wO9EIVn.png)
+| All Pets with No Cache (GET) [Look at response time] | ![All Pets with No Cache](https://i.imgur.com/HmpEvSh.png)
+| All Pets with Cache (GET) [Look at response time] | ![All Pets with No Cache](https://i.imgur.com/kdtBrmt.png)
+| User Saved in MongoDB with Password Encryption| ![User Saved in MongoDB](https://i.imgur.com/gnKXcxM.png)
+
 This will add a new pet to the Pet Store and should return the newly created product's details.
 
 ## Acknowledgements
