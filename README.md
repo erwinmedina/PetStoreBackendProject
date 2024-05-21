@@ -6,12 +6,11 @@
 
 # Developers: Pet Query Group
 
-| Name          | Email                            | Contribution                             |
-| ------------- | -------------------------------- | ---------------------------------------- |
-| Erwin Medina  | erwinmedina@csu.fullerton.edu    | Caching, DB, Presentation, Main CRUD     |
-| Abel Mendoza  | abel_mendoza10@csu.fullerton.edu | Project set up, Bcrypt, JWT, Redis caching, ReadMe, Presentation                          |
-
-| Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Load Balancer, Presentation, Main CRUD   |
+| Name          | Email                            | Contribution                                       |
+| ------------- | -------------------------------- | -------------------------------------------------- |
+| Erwin Medina  | erwinmedina@csu.fullerton.edu    | Caching, DB, Presentation, Main CRUD               |
+| Abel Mendoza  | abel_mendoza10@csu.fullerton.edu | Project set up, Bcrypt, JWT, Redis caching, ReadMe, Presentation |
+| Akshat Javiya | akshatjaviya02@csu.fullerton.edu | Load Balancer, Presentation, Main CRUD             |
 
 <img src="image/README/1715234666089.png" width="250" height="250" alt="Shrunk Image">
 
